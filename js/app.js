@@ -2,12 +2,15 @@ $(() => {
 
 // console.log('hello');
 const $h1 = $('h1');
-const $button = $('button');
+const $playButton = $('.playButton');
 let $input = $('input[type="text"]');
 let $submitButton = $('input[type="submit"]');
 let $userInput = $input.val();
 let wordsArray = ['cat', 'hat', 'bat'];
 let jumbledWordsArray = [];
+let points = [];
+let $fallingWord = $('#fallingWord');
+console.log($fallingWord.html());
 
 
 
@@ -19,17 +22,18 @@ function randomizeLetters() {
   let jumbledWordJoined = jumbledWord.join('');
   // console.log(jumbledWordJoined);
   jumbledWordsArray.push(jumbledWordJoined);
-  // console.log(jumbledWordsArray);
+  console.log(jumbledWordsArray);
 };
 
 function randomizeLettersloop() {
   //here is where the checkAnswer would be located, I think.
   for (var i = 0; i < jumbledWordsArray.length; i++) {
-    jumbledWordsArray[i]
-    randomizeLetters();
+    jumbledWordsArray[i].randomizeLetters();
     console.log(jumbledWordsArray);
   }
-}
+};
+
+randomizeLettersloop();
 
 
 
@@ -50,19 +54,35 @@ function randomizeLettersloop() {
 //   };
 // };
 
+//////////////////////////////////////////////////NEED THIS (BELOW)////////////////////
+// $playButton.one('click', function() {
+//   randomizeLetters();
+//   //add the jumbledWordsArray to #fallingWord
+//   $fallingWord.html(jumbledWordsArray);
+//   //make the word fall from the top of the screen.
+// });
 
-$button.on('click', function() {
-  randomizeLetters();
+
+
+$playButton.on('click',function(){
+    // console.log('hello');
+    randomizeLetters();
+    $fallingWord.html(jumbledWordsArray);
+    $fallingWord.animate({top: '+580px'}, 9000);
+    $fallingWord.animate({opacity: '0'}, 1);
 });
+
 
 $submitButton.on('click', function(e) {
   e.preventDefault();
   $userInput = $input.val();
-
   // console.lo g($userInput);
   checkAnswer();
+  console.log(points);
 });
 
+
+//NEED FALLING WORD TO CONTAIN JUMBLED WORDS ARRAY
 
 
 function checkAnswer() {
@@ -71,10 +91,16 @@ function checkAnswer() {
 
   // If the contents of the imput box is the same as wordsArray[i], make the word dissapear / display none, alert the user they have got the correct answer, allow the user to move on to the next word.
   if($userInput === wordsArray[0]) {
-    alert('correct answer');
+    // alert('correct answer');
+    $fallingWord.animate({opacity: '0'}, "fast");
+    points ++;
     // console.log(`yay ${wordsArray[0]}`);
+    //if the user answer is correct display none for words array[0]
+    //if the user answer is correct randomize the next word
+    //"                            " then check the answer of the next word.
   } else {
       alert('keep trying');
+      points --;
     }
 
 }
@@ -85,6 +111,8 @@ function resetGame() {
 }
 
 function animateWords() {
+
+
 }
 
 
@@ -95,15 +123,7 @@ function animateWords() {
 
 
 
-// $("button").click(function(){
-//     // console.log('hello');
-//     $("h1").animate({
-//         left: '250px',
-//         // opacity: '0.5',
-//         // height: '150px',
-//         // width: '150px'
-//     });
-// });
+
 
 
 });

@@ -1,3 +1,66 @@
+
+
 body {
-  background-color: blue;
+  background-color: white;
+}
+
+h1 {
+  margin: 10px auto;
+  width: 300px;
+  text-align: center;
+}
+
+main {
+  margin: 10px auto;
+  width: 500px;
+}
+
+.screen {
+  background-color: #f2f2f2;
+  height: 550px;
+}
+
+.fallingWord {
+  float: right;
+  font-size: 30px;
+  position: absolute;
+}
+
+button, input[type="submit"] {
+  background-color: #66ffff;
+  color: #fff;
+  border: 0;
+  width: 100%;
+  display: block;
+  font-size: 15px;
+  border-radius: 3px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+input[type="text"] {
+  width: 96%;
+  background-color: white;
+  border: 1px solid #e6e6e6;
+  font-size: 14px;
+  padding: 9px 8px 7px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+input[type="submit"] {
+  border: 0;
+  margin-top: 10px;
+}
+
+.playButton {
+  height: 30px;
+  width: 200px;
+  color: black;
+  background-color: #f2f2f2;
+  margin: 10px auto;
 }
