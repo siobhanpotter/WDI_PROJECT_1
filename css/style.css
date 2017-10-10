@@ -26,7 +26,7 @@ main {
   position: absolute;
 }
 
-button, input[type="submit"] {
+button, input[type="submit"], .submit {
   background-color: #66ffff;
   color: #fff;
   border: 0;
@@ -53,6 +53,11 @@ input[type="text"] {
 }
 
 input[type="submit"] {
+  border: 0;
+  margin-top: 10px;
+}
+
+.submit {
   border: 0;
   margin-top: 10px;
 }
