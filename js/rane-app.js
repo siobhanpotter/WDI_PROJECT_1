@@ -10,9 +10,14 @@ let $score;
 let $submitButton;
 let score = 0;
 let word;
+let wordCounter = 0;
+let $resetButton;
+let startCreatingWords;
+let $resetPage;
 
-const wordsArray = ['cat', 'tree', 'house'];
-// const randomWord = [];
+
+const wordsArray        = ['cat', 'tree', 'house', 'apple', 'garden', 'pizza', 'italy'];
+const randomWordArray   = [];
 
 function setup() {
   $submitButton = $('.submit');
@@ -22,40 +27,75 @@ function setup() {
   $input = $('input[type="text"]');
   $userInput = $input.val();
   $score = $('.score');
+  $resetButton = $('.resetButton');
+  $resetPage = $('resetPage');
 
 
   $playButton.one('click', function() {
-    setInterval(pickRandomWord,2000);
+    pickRandomWord();
+    startCreatingWords = setInterval(pickRandomWord,9000);
+    $('.myClass').css('border', '5px solid red');
+    $('.myClass').on('keyup', function() {
+      if ($(this).val() === randomWordArray[0]) {
+        $('.myClass').css('border', '5px solid green');
+      }
+    });
     console.log(word);
   });
 
+  // var refreshIntervalId = setInterval(fname, 10000);
+  /* later */
 
-  $submitButton.on('click', function() {
+  $submitButton.on('submit', function(e) {
+    e.preventDefault();
+    console.log('form submitted');
     $userInput = $input.val();
+    console.log($userInput);
     checkAnswer();
-    console.log(score);
-    $score.html(score);
+    $input.val('');
   });
-}
+
+
+
+
+  $resetButton.one('click', function(){
+    console.log('hi');
+    reset();
+    ///need to stop the set interval from running////
+    clearInterval(startCreatingWords);
+    $resetPage.show();
+  });
+
+} // ************* END ON SETUP!!!!!!!!!!! ************ //
+
+
+
 
 function pickRandomWord() {
-  word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+  $('.myClass').css('border', '5px solid red');
+  // word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+  word = wordsArray[wordCounter];
+  wordCounter++;
+  if (wordCounter === wordsArray.length) wordCounter = 0;
+  randomWordArray.push(word);
+  console.log(randomWordArray);
   shuffleString(word);
-
 }
 
 function shuffleString(word) {
-  const shuffledWord = shuffleWord(word);
-  if (shuffledWord === word) {
-    shuffleString(word);
-  }
+  let shuffledWord = '';
+  shuffledWord = shuffleWord(word);
+  if (shuffledWord === word) shuffledWord = shuffleWord(word);
+
   createHtmlContainerForWord(shuffledWord);
 }
 
 function createHtmlContainerForWord(shuffledWord) {
   // console.log('this is from createHtmlContainerForWord', shuffledWord);
   const $wordContainer = $(`<div class="word-container">${shuffledWord}</div>`);
+
   $screen.append($wordContainer);
+  $($('.word-container')[0]).addClass('active');
   randomWidth($wordContainer);
 }
 
@@ -69,29 +109,25 @@ function randomWidth(container) {
 }
 
 function animateHtmlContainer(container) {
-  container.animate({top: '+512px'}, 9000);
-  // if ($userInput === word){
-  //   container.css('color','pink');
-  // } else {
-  //   container.css('color','white');
-  // }
-
-  // $wordContainer.css('color','red');
-  // container.css('color','white');
-  // container.css({'margin-left': randomWidth});
-  // container.animate({backgroundColor: 'black'}, 'slow');
-  // container.animate({left: '+512px'},9000);
-  // container.animate({opacity: '0'}, 1);
-  // $('#first').animate({ width: '200px', marginTop:'50px' }, 200);
-  checkAnswer(container);
+  container.animate({top: '+512px'}, 9000, 'linear', function() {
+    console.log('animation finished');
+    container.remove();
+    $($('.word-container')[0]).addClass('active');
+  });
 }
 
 
 function checkAnswer() {
-  if($userInput === word) {
-    score ++;
+  if($userInput === randomWordArray[0]) {
+    score++;
+    $score.html(score);
+    console.log(score);
+    randomWordArray.shift();
+    $($('.word-container')[0]).remove();
+    $($('.word-container')[0]).addClass('active');
   } else {
-    score --;
+    score--;
+    $score.html(score);
   }
 }
 
@@ -103,4 +139,16 @@ function shuffleWord(word){
     shuffledWord +=  word.splice(word.length * Math.random() << 0, 1);
   }
   return shuffledWord;
+}
+
+// $('#reset').one('click', function(){
+//   console.log('hi');
+//   score = 0;
+//   wordCounter = 0;
+// });
+
+function reset() {
+  score = 0;
+  wordCounter = 0;
+  $score.html(score);
 }
