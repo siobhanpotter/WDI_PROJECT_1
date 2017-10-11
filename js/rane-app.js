@@ -25,8 +25,8 @@ function setup() {
 
 
   $playButton.one('click', function() {
-    // intervalFunction();
-    setInterval(pickRandomWord,10000);
+    setInterval(pickRandomWord,2000);
+    console.log(word);
   });
 
 
@@ -39,16 +39,16 @@ function setup() {
 }
 
 function pickRandomWord() {
-  // const word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
   word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
-  //Check answer now before the letters in the word are shuffled
   shuffleString(word);
-  // console.log(word);
 
 }
 
 function shuffleString(word) {
   const shuffledWord = shuffleWord(word);
+  if (shuffledWord === word) {
+    shuffleString(word);
+  }
   createHtmlContainerForWord(shuffledWord);
 }
 
@@ -69,18 +69,28 @@ function randomWidth(container) {
 }
 
 function animateHtmlContainer(container) {
-  // console.log(container);
   container.animate({top: '+512px'}, 9000);
-  container.animate({opacity: '0'}, 1);
+  // if ($userInput === word){
+  //   container.css('color','pink');
+  // } else {
+  //   container.css('color','white');
+  // }
+
+  // $wordContainer.css('color','red');
+  // container.css('color','white');
+  // container.css({'margin-left': randomWidth});
+  // container.animate({backgroundColor: 'black'}, 'slow');
+  // container.animate({left: '+512px'},9000);
+  // container.animate({opacity: '0'}, 1);
+  // $('#first').animate({ width: '200px', marginTop:'50px' }, 200);
+  checkAnswer(container);
 }
 
 
 function checkAnswer() {
   if($userInput === word) {
-    alert('correct answer');
     score ++;
   } else {
-    alert('keep trying');
     score --;
   }
 }
