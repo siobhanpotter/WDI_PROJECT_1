@@ -14,6 +14,8 @@ let wordCounter = 0;
 let $resetButton;
 let startCreatingWords;
 let $resetPage;
+let counter = 5000;
+console.log(counter);
 
 
 const wordsArray        = ['cat', 'tree', 'house', 'apple', 'garden', 'pizza', 'italy'];
@@ -33,24 +35,67 @@ function setup() {
 
   $playButton.one('click', function() {
     pickRandomWord();
-    startCreatingWords = setInterval(pickRandomWord,9000);
+    // console.log(counter);
+
+    //
+    function decreaseCounter() {
+      for (var i = 0; i < 10; i++) {
+        counter--;
+        console.log(counter);
+      }
+    }
+
+    setInterval(decreaseCounter, 100);
+
+
+    // startCreatingWords = setInterval(pickRandomWord, counter);
+
+    console.log(counter);
+    startCreatingWords = setInterval(pickRandomWord, counter);
     $('.myClass').css('border', '5px solid red');
     $('.myClass').on('keyup', function() {
       if ($(this).val() === randomWordArray[0]) {
         $('.myClass').css('border', '5px solid green');
       }
     });
-    console.log(word);
+    // incrumnetCounter();
   });
+
+
+  // function incrumnetCounter() {
+  //   setInterval(counter-=1000, 1000);
+  // }
+
+
+  /////////////////////////////////////////////////////////////////////////////
+  // $playButton.one('click', function() {
+  //   pickRandomWord();
+  //   startCreatingWords = setInterval(pickRandomWord, 5000);
+  //   console.log(this);
+  //   $('.myClass').css('border', '5px solid red');
+  //   $('.myClass').on('keyup', function() {
+  //     // console.log(this);
+  //     if ($(this).val() === randomWordArray[0]) {
+  //       $('.myClass').css('border', '5px solid green');
+  //       // console.log(this);
+  //     }
+  //   });
+  //   // console.log(word);
+  // });
+
 
   // var refreshIntervalId = setInterval(fname, 10000);
   /* later */
 
+
+
+
+
   $submitButton.on('submit', function(e) {
     e.preventDefault();
-    console.log('form submitted');
+    // console.log('form submitted');
     $userInput = $input.val();
-    console.log($userInput);
+    // console.log($userInput);
     checkAnswer();
     $input.val('');
   });
@@ -59,7 +104,7 @@ function setup() {
 
 
   $resetButton.one('click', function(){
-    console.log('hi');
+    // console.log('hi');
     reset();
     ///need to stop the set interval from running////
     clearInterval(startCreatingWords);
@@ -78,7 +123,7 @@ function pickRandomWord() {
   wordCounter++;
   if (wordCounter === wordsArray.length) wordCounter = 0;
   randomWordArray.push(word);
-  console.log(randomWordArray);
+  // console.log(randomWordArray);
   shuffleString(word);
 }
 
@@ -109,8 +154,8 @@ function randomWidth(container) {
 }
 
 function animateHtmlContainer(container) {
-  container.animate({top: '+512px'}, 9000, 'linear', function() {
-    console.log('animation finished');
+  container.animate({top: '+512px'}, counter, 'linear', function() {
+    // console.log('animation finished');
     container.remove();
     $($('.word-container')[0]).addClass('active');
   });
@@ -121,7 +166,7 @@ function checkAnswer() {
   if($userInput === randomWordArray[0]) {
     score++;
     $score.html(score);
-    console.log(score);
+    // console.log(score);
     randomWordArray.shift();
     $($('.word-container')[0]).remove();
     $($('.word-container')[0]).addClass('active');
