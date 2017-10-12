@@ -34,96 +34,49 @@ function setup() {
 
 
   $playButton.one('click', function() {
-    pickRandomWord();
-    // console.log(counter);
-
-    //
-    function decreaseCounter() {
-      for (var i = 0; i < 10; i++) {
-        counter--;
-        console.log(counter);
-      }
-    }
-
-    setInterval(decreaseCounter, 100);
-
-
-    // startCreatingWords = setInterval(pickRandomWord, counter);
-
-    console.log(counter);
-    startCreatingWords = setInterval(pickRandomWord, counter);
-    $('.myClass').css('border', '5px solid red');
-    $('.myClass').on('keyup', function() {
-      if ($(this).val() === randomWordArray[0]) {
-        $('.myClass').css('border', '5px solid green');
-      }
-    });
-    // incrumnetCounter();
+    inputFocus();
+    pickWord();
+    startGame();
+    setInterval(decreaseCounter, 500);
   });
-
-
-  // function incrumnetCounter() {
-  //   setInterval(counter-=1000, 1000);
-  // }
-
-
-  /////////////////////////////////////////////////////////////////////////////
-  // $playButton.one('click', function() {
-  //   pickRandomWord();
-  //   startCreatingWords = setInterval(pickRandomWord, 5000);
-  //   console.log(this);
-  //   $('.myClass').css('border', '5px solid red');
-  //   $('.myClass').on('keyup', function() {
-  //     // console.log(this);
-  //     if ($(this).val() === randomWordArray[0]) {
-  //       $('.myClass').css('border', '5px solid green');
-  //       // console.log(this);
-  //     }
-  //   });
-  //   // console.log(word);
-  // });
-
-
-  // var refreshIntervalId = setInterval(fname, 10000);
-  /* later */
-
-
-
 
 
   $submitButton.on('submit', function(e) {
     e.preventDefault();
-    // console.log('form submitted');
     $userInput = $input.val();
-    // console.log($userInput);
     checkAnswer();
     $input.val('');
   });
 
-
-
-
   $resetButton.one('click', function(){
-    // console.log('hi');
     reset();
-    ///need to stop the set interval from running////
     clearInterval(startCreatingWords);
-    $resetPage.show();
+    // $resetPage.show();
   });
 
 } // ************* END ON SETUP!!!!!!!!!!! ************ //
 
+function startGame() {
+  startCreatingWords = setInterval(pickWord, 3000);
+  $('.myClass').css('border', '5px solid red');
+  $('.myClass').on('keyup', function() {
+    if ($(this).val() === randomWordArray[0]) {
+      $('.myClass').css('border', '5px solid green');
+    }
+  });
+}
 
+function inputFocus() {
+  $input.focus();
+}
 
-
-function pickRandomWord() {
+function pickWord() {
   $('.myClass').css('border', '5px solid red');
   // word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
   word = wordsArray[wordCounter];
   wordCounter++;
   if (wordCounter === wordsArray.length) wordCounter = 0;
   randomWordArray.push(word);
-  // console.log(randomWordArray);
   shuffleString(word);
 }
 
@@ -136,14 +89,12 @@ function shuffleString(word) {
 }
 
 function createHtmlContainerForWord(shuffledWord) {
-  // console.log('this is from createHtmlContainerForWord', shuffledWord);
   const $wordContainer = $(`<div class="word-container">${shuffledWord}</div>`);
-
   $screen.append($wordContainer);
   $($('.word-container')[0]).addClass('active');
+
   randomWidth($wordContainer);
 }
-
 
 function randomWidth(container) {
   const randomWidth = Math.floor(Math.random() * 410);
@@ -154,10 +105,10 @@ function randomWidth(container) {
 }
 
 function animateHtmlContainer(container) {
-  container.animate({top: '+512px'}, counter, 'linear', function() {
-    // console.log('animation finished');
+  container.animate({top: '+430px'}, counter, 'linear', function() {
     container.remove();
     $($('.word-container')[0]).addClass('active');
+    randomWordArray.shift();
   });
 }
 
@@ -166,7 +117,6 @@ function checkAnswer() {
   if($userInput === randomWordArray[0]) {
     score++;
     $score.html(score);
-    // console.log(score);
     randomWordArray.shift();
     $($('.word-container')[0]).remove();
     $($('.word-container')[0]).addClass('active');
@@ -175,7 +125,6 @@ function checkAnswer() {
     $score.html(score);
   }
 }
-
 
 function shuffleWord(word){
   var shuffledWord = '';
@@ -186,14 +135,17 @@ function shuffleWord(word){
   return shuffledWord;
 }
 
-// $('#reset').one('click', function(){
-//   console.log('hi');
-//   score = 0;
-//   wordCounter = 0;
-// });
+function decreaseCounter() {
+  for (var i = 0; i < 10; i++) {
+    counter--;
+    console.log(counter);
+  }
+}
 
 function reset() {
   score = 0;
   wordCounter = 0;
   $score.html(score);
+  $($('.word-container')[0]).remove();
+  setup();
 }
