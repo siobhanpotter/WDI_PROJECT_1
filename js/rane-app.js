@@ -15,7 +15,10 @@ let $resetButton;
 let startCreatingWords;
 let $resetPage;
 let counter = 5000;
-console.log(counter);
+let $welcome;
+let $menuContainer;
+let $x;
+// console.log(counter);
 
 
 const wordsArray        = ['cat', 'tree', 'house', 'apple', 'garden', 'pizza', 'italy'];
@@ -30,7 +33,22 @@ function setup() {
   $userInput = $input.val();
   $score = $('.score');
   $resetButton = $('.resetButton');
-  $resetPage = $('resetPage');
+  $resetPage = $('.resetPage');
+  $welcome = $('.welcome');
+  $menuContainer = $('.menuContainer');
+  $x = $('.x');
+
+
+
+
+  $menuContainer.on('click', function() {
+    $welcome.show();
+  });
+
+  $x.on('click', function() {
+    console.log('hi');
+    $welcome.hide();
+  });
 
 
   $playButton.one('click', function() {
@@ -54,24 +72,56 @@ function setup() {
     // $resetPage.show();
   });
 
+
+
 } // ************* END ON SETUP!!!!!!!!!!! ************ //
 
+
+// function startGame() {
+//   startCreatingWords = setInterval(pickWord, 5000);
+//   $('.myClass').css('border', '5px solid red');
+//   $('.myClass').on('keyup', function() {
+//     if ($(this).val() === randomWordArray[0]) {
+//       $('.myClass').css('border', '5px solid green');
+//     }
+//     console.log(randomWordArray[0]);
+//   });
+// }
+
+
+
 function startGame() {
-  startCreatingWords = setInterval(pickWord, 3000);
-  $('.myClass').css('border', '5px solid red');
+  startCreatingWords = setInterval(pickWord, 5000);
+
+  $('.myClass').css('border', '5px solid #FF68CC');
   $('.myClass').on('keyup', function() {
     if ($(this).val() === randomWordArray[0]) {
-      $('.myClass').css('border', '5px solid green');
+      $('.myClass').css('border', '5px solid #B3FFAB');
     }
+    console.log(randomWordArray[0]);
+    levels();
+
   });
 }
+
+
+
+function levels() {
+  if (score <= -10){
+    $resetPage.show();
+  } else if (score >= 6) {
+    clearInterval(startCreatingWords);
+    startCreatingWords = setInterval(pickWord, 3000);
+  }
+}
+
 
 function inputFocus() {
   $input.focus();
 }
 
 function pickWord() {
-  $('.myClass').css('border', '5px solid red');
+  $('.myClass').css('border', '5px solid #FF68CC');
   // word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
   word = wordsArray[wordCounter];
   wordCounter++;
@@ -105,7 +155,7 @@ function randomWidth(container) {
 }
 
 function animateHtmlContainer(container) {
-  container.animate({top: '+430px'}, counter, 'linear', function() {
+  container.animate({top: '+500px'}, counter, 'linear', function() {
     container.remove();
     $($('.word-container')[0]).addClass('active');
     randomWordArray.shift();
@@ -138,7 +188,6 @@ function shuffleWord(word){
 function decreaseCounter() {
   for (var i = 0; i < 10; i++) {
     counter--;
-    console.log(counter);
   }
 }
 
