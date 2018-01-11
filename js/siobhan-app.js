@@ -2,7 +2,7 @@
 $(setup);
 
 let $screen;
-let $wordContainer;
+// let $wordContainer;
 let $playButton;
 let $input;
 let $userInput;
@@ -14,7 +14,7 @@ let wordCounter = 0;
 let $resetButton;
 let startCreatingWords;
 let startCreatingWordsL2;
-let $resetPage;
+// let $resetPage;
 let counter = 5000;
 let $welcome;
 let $menuContainer;
@@ -27,13 +27,13 @@ const randomWordArray   = [];
 function setup() {
   $submitButton = $('.submit');
   $screen = $('.screen');
-  $wordContainer = $('.word-container');
+  // $wordContainer = $('.word-container');
   $playButton = $('.playButton');
   $input = $('input[type="text"]');
   $userInput = $input.val();
   $score = $('.score');
   $resetButton = $('.resetButton');
-  $resetPage = $('.resetPage');
+  // $resetPage = $('.resetPage');
   $welcome = $('.welcome');
   $menuContainer = $('.menuContainer');
   $x = $('.x');
@@ -66,7 +66,7 @@ function setup() {
     $input.val('');
   });
 
-  ////RESET BUTTON - RESET GAME + CLER INTERVAL FOR LEVEL ONE AND LEVEL 2.
+  ////RESET BUTTON - RESET GAME + CLEAR INTERVAL FOR LEVEL ONE AND LEVEL 2.
   $resetButton.one('click', function(){
     reset();
     clearInterval(startCreatingWords);
@@ -97,17 +97,6 @@ function inputBoxCss() {
   });
 }
 
-//SHOW THE RESET PAGE IF SCORE IS LESS THAN -10, IF SCORE IS ABOVE 6 SPEED UP.
-// function levels(startCreatingWords) {
-//   if (score <= -10){
-//     $resetPage.show();
-//   } else if (score >= 6) {
-//     clearInterval(startCreatingWords);
-//     startCreatingWordsL2 = setInterval(pickWord, 4000);
-//   }
-// }
-
-
 function inputFocus() {
   $input.focus();
 }
@@ -131,7 +120,6 @@ function shuffleString(word) {
   let shuffledWord = '';
   shuffledWord = shuffleWord(word);
   if (shuffledWord === word) shuffledWord = shuffleWord(word);
-
   createHtmlContainerForWord(shuffledWord);
 }
 
@@ -140,7 +128,6 @@ function createHtmlContainerForWord(shuffledWord) {
   const $wordContainer = $(`<div class="word-container">${shuffledWord}</div>`);
   $screen.append($wordContainer);
   $($('.word-container')[0]).addClass('active');
-
   randomWidth($wordContainer);
 }
 
@@ -149,14 +136,12 @@ function randomWidth(container) {
   const randomWidth = Math.floor(Math.random() * 410);
   $screen.append(container);
   container.css({'margin-left': randomWidth});
-
   animateHtmlContainer(container);
 }
 
 //ADD PX TO THE TOP OF THE ELEMENT TO MAKE IT APPEAR AS THOUGH ITS FALLING + ADD THE ACTIVE CLASS
 //REMOVE WORD FROM RANDOM WORD ARRAY
 function animateHtmlContainer(container) {
-  //COUNTER CONTROLS THE SPEED AT WHICH THE ELEMENT MOVES
   container.animate({top: '+500px'}, counter, 'linear', function() {
     container.remove();
     $($('.word-container')[0]).addClass('active');
