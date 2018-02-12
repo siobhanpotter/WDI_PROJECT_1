@@ -35,22 +35,9 @@ function setup() {
   $resetButton = $('.resetButton');
   // $resetPage = $('.resetPage');
   $welcome = $('.welcome');
-  $menuContainer = $('.menuContainer');
   $x = $('.x');
 
-
-
-  ////////////////ON CLICK SHOW INSTRUCTIONS
-  $menuContainer.on('click', function() {
-    $welcome.show();
-  });
-
-  ///////////ON CLICK HIDE INSTRUCTIONS
-  $x.on('click', function() {
-    $welcome.hide();
-  });
-
-  ////////PLAY BUTTON - FOCUS ON INPUT, START THE CHAIN OF EVENTS + SPEED UP AS THE GAME GOES ON
+  //PLAY BUTTON - FOCUS ON INPUT, START THE CHAIN OF EVENTS + SPEED UP AS THE GAME GOES ON
   $playButton.one('click', function() {
     inputFocus();
     pickWord();
@@ -58,7 +45,7 @@ function setup() {
     setInterval(decreaseCounter, 500);
   });
 
-  ////////SUBMIT BUTTON - PREVENT AUTO REFRESH, GET VALUE OF USERS ANSWER, CHECK ANSWER AGAINST ORIGINAL WORD, CLEAR INPUT
+  //SUBMIT BUTTON - PREVENT AUTO REFRESH, GET VALUE OF USERS ANSWER, CHECK ANSWER AGAINST ORIGINAL WORD, CLEAR INPUT
   $submitButton.on('submit', function(e) {
     e.preventDefault();
     $userInput = $input.val();
@@ -66,7 +53,7 @@ function setup() {
     $input.val('');
   });
 
-  ////RESET BUTTON - RESET GAME + CLEAR INTERVAL FOR LEVEL ONE AND LEVEL 2.
+  //RESET BUTTON - RESET GAME + CLEAR INTERVAL FOR LEVEL ONE AND LEVEL 2.
   $resetButton.one('click', function(){
     reset();
     clearInterval(startCreatingWords);

@@ -4,13 +4,12 @@ $(() => {
   const $input = $('input[type="text"]');
   // const $submitButton = $('input[type="submit"]');
   const $submitButton = $('.submit');
-  console.log($submitButton);
   let $userInput = $input.val();
   const wordsArray = ['cat', 'hat', 'bat'];
   const jumbledWordsArray = [];
   let score = 0;
   const $score = $('.score');
-  const timer = 10;
+  // const timer = 10;
   // const $timeContainer = $('.timer');
   const $screen = $('.screen');
 
